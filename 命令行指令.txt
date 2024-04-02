@@ -1,0 +1,10 @@
+Train：
+python -m torch.distributed.launch --nnodes 1 --nproc_per_node 3 train.py --cuda -d ucf24 --data_root /data1/su/datasets/UCF24-YOWO/ -bs 48 -tbs 8 -K 16 -accu 8 -v yowo_v3_large --max_epoch 7 --lr_epoch 2 3 4 5 --eval -ct 0.05 --distributed --sybn 
+--resume weights/ucf24/yowo_v3_large/yowo_v3_large_epoch_0.pth (--untrimmed) 
+
+
+Frame mAP：
+python eval.py --cuda -d ucf24 --data_root /data1/su/datasets/UCF24-YOWO/ -tbs 16 -v yowo_v3_large --weight weights/ucf24/yowo_v3_large/yowo_v3_large_epoch_0.pth -ct 0.05 --cal_frame_mAP
+
+Video mAP：
+python eval.py --cuda -d ucf24 --data_root /data1/su/datasets/UCF24-YOWO/ -tbs 16 -v yowo_v3_large --weight weights/ucf24/yowo_v3_large/yowo_v3_large_epoch_0.pth -ct 0.05 --cal_video_mAP --link_method viterbi  --untrimmed
